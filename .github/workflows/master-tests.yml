@@ -1,0 +1,23 @@
+name: Master Branch Tests
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  all-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install dependencies
+        run: pip install unittest
+      - name: Run Unit Tests
+        run: python -m unittest discover -s tests -p 'test_unit_*.py'
+      - name: Run Integration Tests
+        run: python -m unittest discover -s tests -p 'test_integration_*.py'
